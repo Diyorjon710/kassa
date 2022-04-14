@@ -1,0 +1,47 @@
+.numpad button{
+    font-size: 1.5em;
+}
+
+
+.card{
+    height: 350px;
+    width: 700px;
+    padding: 100px;
+    font-size: 30px;
+    margin-left: 100px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.order{
+    height: 350px;
+    width: 700px;
+    padding: 100px;
+    font-size: 30px;
+    margin-left: 100px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    opacity: 0;
+}
+
+
+td,th{
+    font-size: 40px;
+}
+
+#error{
+    margin-top: 10px;
+    font-size: 45px;
+}
+
+#search{
+
+    font-size: 40px;
+    margin-top: 30px;
+}
+
+.empty{
+
+font-size: 50px;
+color: red;
+}
