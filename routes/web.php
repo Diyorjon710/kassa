@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahsulotController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +18,23 @@ use App\Http\Controllers\MahsulotController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Route::get('booked', [MahsulotController::class, 'booked'])->name('booked');
+Auth::routes();
+
+Route::get('booked', [MahsulotController::class, 'booked'])->name('booked')->middleware('auth');
 Route::get('index', [MahsulotController::class, 'index']);
 Route::get('search', [MahsulotController::class, 'bookedajax']);
+
+
+//Route::prefix('admin')->group(function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+
+    Route::get('/main', [AdminController::class, 'index'])->name('main');
+    Route::resource('product', ProductController::class)->middleware('auth');
+});
+
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

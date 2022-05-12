@@ -12,12 +12,13 @@ class MahsulotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        return view('mahsulot.index');
+        $list = Mahsulot::all();
+        return view('mahsulot.index', ['list' => $list]);
     }
 
-    public function booked(Request $request)
+    public function booked()
     {
         return view('mahsulot.booked');
     }
@@ -33,7 +34,7 @@ class MahsulotController extends Controller
             if (count($data) > 0) {
 
                 $output = '
-                <table class="table">
+                <table class="table table-hover table-fixed" border=1>
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -46,7 +47,7 @@ class MahsulotController extends Controller
                 $count  = 1;
                 foreach ($data as $d) {
                     $output .= '
-                <tr onclick = "getIndex(' . $d->id . ')">
+                <tr onclick = "getIndex(\'' . $d->nomi . '\',' . $d->narxi . ')">
                 <td>' . $count++  . '</td>
                 <td>' . $d->nomi . '</td>
                 <td>' . $d->narxi . '</td>
@@ -57,7 +58,7 @@ class MahsulotController extends Controller
 
 
                 $output .= '</tbody>
-        </table> ';
+        </table>  ';
             } else {
                 $output .= "<span class='empty'>No results</span>";
             }

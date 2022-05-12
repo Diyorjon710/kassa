@@ -8,6 +8,7 @@
     <title>Mahsulot</title>
     <link rel="stylesheet" href="{{ url('v1/bs5/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('v1/mystyle.css') }}">
+    <link rel="stylesheet" href="{{ url('/v1/bs5/all.min.css')}}">
 
 
 
