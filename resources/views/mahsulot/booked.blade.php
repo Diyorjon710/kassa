@@ -51,22 +51,17 @@
                                 <tbody id="tbody">
 
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td style="font-weight: bold;">Jami:</td>
-                                        <td>
-                                            <div style=" font-weight: bold;" id="jami">0
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tfoot>
 
                             </table>
+                            <div style="font-weight: bold;">Jami: <div style=" font-weight: bold;" id="jami">0</div>
+                            </div>
+
                         </div>
 
                     </div>
 
-                    <button type="button" class="btn btn-primary">Qo'shish</button>
+
+                    <button type="button" id="buyurtma" class="btn btn-primary">Buyurtma</button>
                 </div>
 
             </div>
@@ -111,15 +106,20 @@
     </div>
 </div>
 
+
+
 @endsection
 
 
 @section('myjs')
 <script>
+    var div = document.getElementById("jami");
+    let nomi1 = [];
+
     function Order() {
         //const tr = document.getElementById('nomi');
         const tbody = document.getElementById('tbody');
-        let rowCount = $("#table tr").length - 1;
+        let rowCount = $("#table tr").length;
         let index = document.getElementById('index').textContent = rowCount;
         let tr = document.createElement('tr');
         let narxi = document.getElementById('narx').innerText;
@@ -127,8 +127,14 @@
         let nomi = document.getElementById("nomi").innerText;
         let span = document.getElementById("error");
         let q_narxi = narxi * soni;
-        let div = document.getElementById("jami");
-        var jami = parseInt(div.innerText);
+
+
+        var jami = parseInt(div.textContent);
+
+
+        let id = [];
+        let narxi1 = [];
+        let soni1 = [];
 
 
         if (soni == "" || nomi == "") {
@@ -150,27 +156,68 @@
 
 
             for (let i = 0; i < sessionStorage.length; i++) {
-                let key = sessionStorage.key(i);
+                var key = sessionStorage.key(i);
                 let td = document.createElement('td');
                 tbody.appendChild(tr);
                 td.textContent = sessionStorage.getItem(key);
                 tr.appendChild(td);
+                id.push(td.textContent);
             }
-
-
-
-
-
-
         }
     }
 
 
+    function getIndex(x, y, z) {
 
-    function getIndex(x, y) {
         document.getElementById('nomi').textContent = x;
         document.getElementById('narx').textContent = y;
+        nomi1.push(z);
     }
+
+    $('#buyurtma').click(function() {
+        $('#table tr').each(function(row, tr) {
+
+            if ($(tr).find('td:eq(0)').text() == "") {
+
+            } else {
+                $.get("target", function(data) {
+                    var x = data;
+                    x++;
+                    $.ajax({
+                        url: 'order',
+                        type: "get",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            id: $(tr).find('td:eq(0)').text(),
+                            pro_nomi: $(tr).find('td:eq(1)').text(),
+                            pro_narxi: $(tr).find('td:eq(2)').text(),
+                            pro_soni: $(tr).find('td:eq(3)').text(),
+                            jami: div.textContent,
+                            buyurtma_soni: x
+                        },
+                        success: function(response) { // What to do if we succeed
+                            console.log('Bazaga saqlandi');
+                        },
+                        error: function(response) {
+                            alert('Error' + response);
+                        }
+                    });
+                });
+
+
+            }
+
+        });
+
+    });
+
+
+
+
+
+
+
+
 
     $(document).ready(function() {
         $('#search').on('keyup', function() {

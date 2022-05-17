@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahsulotController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Order_detailsController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Models\Order_details;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -24,15 +27,18 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('booked', [MahsulotController::class, 'booked'])->name('booked')->middleware('auth');
-Route::get('index', [MahsulotController::class, 'index']);
+Route::get('index', [MahsulotController::class, 'index'])->name('plus');
 Route::get('search', [MahsulotController::class, 'bookedajax']);
+Route::get('order', [Order_detailsController::class, 'getData'])->name('getData');
+Route::get('target', [OrderController::class, 'myMethod']);
+
 
 
 //Route::prefix('admin')->group(function () {
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
 
     Route::get('/main', [AdminController::class, 'index'])->name('main');
-    Route::resource('product', ProductController::class)->middleware('auth');
+    Route::resource('product', ProductController::class)->middleware('is_admin');
 });
 
 

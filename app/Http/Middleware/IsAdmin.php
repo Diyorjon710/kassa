@@ -19,6 +19,6 @@ class IsAdmin
         if (auth()->user()->is_admin == 1) {
             return $next($request);
         }
-        return redirect('auth.login')->with('error', 'Sizda admin yo\'q');
+        return redirect()->route('login')->with('error', 'Sizda admin yo\'q');
     }
 }

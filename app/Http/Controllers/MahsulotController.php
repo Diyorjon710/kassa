@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mahsulot;
+use App\Models\Order;
+use App\Models\Order_details;
 use Illuminate\Http\Request;
+use Input;
 
 class MahsulotController extends Controller
 {
@@ -14,8 +17,8 @@ class MahsulotController extends Controller
      */
     public function index()
     {
-        $list = Mahsulot::all();
-        return view('mahsulot.index', ['list' => $list]);
+        $order = Order_details::all();
+        return view('mahsulot.index', ['order' => $order]);
     }
 
     public function booked()
@@ -47,7 +50,7 @@ class MahsulotController extends Controller
                 $count  = 1;
                 foreach ($data as $d) {
                     $output .= '
-                <tr onclick = "getIndex(\'' . $d->nomi . '\',' . $d->narxi . ')">
+                <tr onclick = "getIndex(\'' . addslashes($d->nomi) . '\',' . $d->narxi . ',' . $d->id . ')">
                 <td>' . $count++  . '</td>
                 <td>' . $d->nomi . '</td>
                 <td>' . $d->narxi . '</td>
