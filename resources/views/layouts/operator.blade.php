@@ -18,7 +18,7 @@
 
 
 
-    <div class="container-fluid">
+    <div class="container">
         @yield('main')
     </div>
 

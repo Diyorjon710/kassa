@@ -27,20 +27,21 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('booked', [MahsulotController::class, 'booked'])->name('booked')->middleware('auth');
+Route::get('search', [MahsulotController::class, 'bookedajax'])->middleware('auth');
+Route::get('order', [Order_detailsController::class, 'getData'])->name('getData')->middleware('auth');
+Route::get('target', [OrderController::class, 'myMethod'])->middleware('auth');
 Route::get('index', [MahsulotController::class, 'index'])->name('plus');
-Route::get('search', [MahsulotController::class, 'bookedajax']);
-Route::get('order', [Order_detailsController::class, 'getData'])->name('getData');
-Route::get('target', [OrderController::class, 'myMethod']);
+
 
 
 
 //Route::prefix('admin')->group(function () {
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
 
-    Route::get('/main', [AdminController::class, 'index'])->name('main');
+    Route::get('/main', [AdminController::class, 'index'])->name('main')->middleware('is_admin');
     Route::resource('product', ProductController::class)->middleware('is_admin');
 });
 
 
-
+Route::get('pdf', [AdminController::class, 'getPdf'])->name('pdf');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -17,8 +17,14 @@ class MahsulotController extends Controller
      */
     public function index()
     {
-        $order = Order_details::all();
-        return view('mahsulot.index', ['order' => $order]);
+        $order_list = Order::with('order_details.mahsulot')->get();
+        return view('mahsulot.index', compact('order_list'));
+    }
+
+    public function getOrder_details()
+    {
+        $ordering = Order::find(1)->order_details;
+        return $ordering;
     }
 
     public function booked()

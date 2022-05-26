@@ -23,21 +23,12 @@ class OrderController extends Controller
 
     public function myMethod()
     {
-
-        $max = Order::select('buyurtma_raqami')->max('id');
-
-        $s = Order::all();
-        $s = Order::query();
-        $s = $s->where('id', $max)->get();
-
-
-        $v = new Order();
-        foreach ($s as $ss) {
-            $v->buyurtma_raqami = "{$ss->id}-buyurtma";
-        }
-        $v->save();
-
-        return $max;
+        $s = Order::count() + 1;
+        $ordering = new Order();
+        $ordering->buyurtma_raqami = "{$s}-buyurtma";
+        $ordering->save();
+        $ordering_id = $ordering->id;
+        return $ordering_id;
     }
 
 
@@ -86,7 +77,6 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**

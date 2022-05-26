@@ -5,14 +5,14 @@
 </a>
 
 <div class="row">
-    @foreach ($order as $item)
-
+    @foreach($order_list as $order)
     <div class="col-md-4" style="margin: 5px 0  5px 0; padding: 10px;">
         <div class="card text-center">
             <div class="card-header">
-                {{$item->buyurtma_soni}}
+                {{$order->buyurtma_raqami}}
             </div>
             <div class="card-body">
+
 
                 <table class="table">
                     <tr>
@@ -22,21 +22,22 @@
                         <th>Buyurtmachi</th>
                         <th>Jami</th>
                     </tr>
+                    @foreach($order->order_details as $od)
                     <tr>
-                        <td>{{ $item->mahsulot_nomi }}</td>
-                        <td>{{ $item->mahsulot_narxi }}</td>
-                        <td>{{ $item->mahsulot_soni }}</td>
-                        <td>{{ $item->buyurtmachi }}</td>
-                        <td>{{ $item->jami }}</td>
+                        <td>{{ $od->mahsulot->nomi }}</td>
+                        <td>{{ $od->mahsulot->narxi }}</td>
+                        <td>{{ $od->mahsulot_soni }}</td>
+                        <td>{{ $od->buyurtmachi }}</td>
+                        <td>{{ $od->jami }}</td>
                     </tr>
+                    @endforeach
+
                 </table>
 
                 <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>
     </div>
-
-
     @endforeach
 </div>
 @endsection

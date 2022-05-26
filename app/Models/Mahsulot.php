@@ -10,4 +10,9 @@ class Mahsulot extends Model
     use HasFactory;
 
     protected $table = 'mahsulot';
+
+    function order_details()
+    {
+        return $this->hasMany(Order_details::class);
+    }
 }

@@ -61,7 +61,7 @@
                     </div>
 
 
-                    <button type="button" id="buyurtma" class="btn btn-primary">Buyurtma</button>
+                    <a type="button" id="buyurtma" class="btn btn-primary">Buyurtma</a>
                 </div>
 
             </div>
@@ -174,15 +174,23 @@
         nomi1.push(z);
     }
 
-    $('#buyurtma').click(function() {
-        $('#table tr').each(function(row, tr) {
 
-            if ($(tr).find('td:eq(0)').text() == "") {
 
-            } else {
-                $.get("target", function(data) {
-                    var x = data;
-                    x++;
+    $('#buyurtma').click(async function() {
+        let ordering_id = 0;
+
+        let pd = await $.get("target", function(data) {
+            ordering_id = data;
+        }).promise();
+        //console.log("order " + ordering_id);
+        //console.log("orderdd " + pd);
+
+        if (ordering_id != 0) {
+            $('#table tr').each(function(row, tr) {
+
+                if ($(tr).find('td:eq(0)').text() == "") {
+
+                } else {
                     $.ajax({
                         url: 'order',
                         type: "get",
@@ -193,22 +201,19 @@
                             pro_narxi: $(tr).find('td:eq(2)').text(),
                             pro_soni: $(tr).find('td:eq(3)').text(),
                             jami: div.textContent,
-                            buyurtma_soni: x
+                            ordering_id: ordering_id
                         },
                         success: function(response) { // What to do if we succeed
-                            console.log('Bazaga saqlandi');
+                            window.location = "pdf";
                         },
                         error: function(response) {
                             alert('Error' + response);
                         }
                     });
-                });
+                }
 
-
-            }
-
-        });
-
+            });
+        }
     });
 
 

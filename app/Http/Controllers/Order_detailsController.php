@@ -3,43 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mahsulot;
+use App\Models\Order;
 use App\Models\Order_details;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class Order_detailsController extends Controller
 {
     public function getData(Request $request)
     {
-        $name =  Auth::user()->id;
-        $nomi = $request->pro_nomi;
+
+
+        $user_id =  Auth::user()->id;
+        $id = $request->id;
         $narxi = $request->pro_narxi;
         $soni = $request->pro_soni;
         $jami = $request->jami;
-        $rest_int = $request->buyurtma_soni;
-
-        $s = Mahsulot::all();
-        $s = Mahsulot::query();
-        $s = $s->where('nomi', $nomi)->get();
-
-
-
-
+        $ordering_id = $request->ordering_id;
 
         $m = new Order_details();
-        foreach ($s as $ss) {
-            $m->mahsulot_id = $ss->id;
-        }
-        $m->buyurtma_id = $rest_int;
-        $m->mahsulot_narxi = $rest_int;
+        $m->mahsulot_id = $id;
+        //$m->buyurtma_id =  1; //$rest_int;
+        $m->mahsulot_narxi = $narxi;
         $m->mahsulot_soni = $soni;
-        $m->buyurtmachi_id = $name;
+        $m->buyurtmachi_id = $user_id;
         $m->jami = $jami;
-
-        $query = $m->save();
-
-        if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'New Order']);
-        }
+        $m->order_id = $ordering_id;
+        $m->save();
     }
 }
