@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahsulotController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Order_detailsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -24,9 +25,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+
+
 Auth::routes();
 
-Route::get('booked', [MahsulotController::class, 'booked'])->name('booked')->middleware('auth');
+Route::get('booked', [MahsulotController::class, 'booked'])->middleware('auth')->name('booked');
 Route::get('search', [MahsulotController::class, 'bookedajax'])->middleware('auth');
 Route::get('order', [Order_detailsController::class, 'getData'])->name('getData')->middleware('auth');
 Route::get('target', [OrderController::class, 'myMethod'])->middleware('auth');

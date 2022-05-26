@@ -64,6 +64,14 @@
                     <span>Mahsulotlar</span></a>
             </li>
 
+            <hr class="sidebar-divider">
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('register') }}">
+                    <i class="fa-solid fa-burger-fries"></i>
+                    <span>Register</span></a>
+            </li>
+
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
